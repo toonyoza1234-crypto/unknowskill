@@ -1,0 +1,61 @@
+package daripher.skilltree.skill.bonus.predicate.damage;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import daripher.skilltree.init.PSTDamageConditions;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.damagesource.DamageSource;
+
+public enum NoneDamageCondition implements DamageCondition {
+   INSTANCE;
+
+   @Override
+   public boolean met(DamageSource source) {
+      return true;
+   }
+
+   @Override
+   public DamageCondition.Serializer getSerializer() {
+      return (DamageCondition.Serializer)PSTDamageConditions.NONE.get();
+   }
+
+   public static class Serializer implements DamageCondition.Serializer {
+      public DamageCondition deserialize(JsonObject json) throws JsonParseException {
+         return NoneDamageCondition.INSTANCE;
+      }
+
+      public void serialize(JsonObject json, DamageCondition condition) {
+         if (condition != NoneDamageCondition.INSTANCE) {
+            throw new IllegalArgumentException();
+         }
+      }
+
+      public DamageCondition deserialize(CompoundTag tag) {
+         return NoneDamageCondition.INSTANCE;
+      }
+
+      public CompoundTag serialize(DamageCondition condition) {
+         if (condition != NoneDamageCondition.INSTANCE) {
+            throw new IllegalArgumentException();
+         } else {
+            return new CompoundTag();
+         }
+      }
+
+      public DamageCondition deserialize(FriendlyByteBuf buf) {
+         return NoneDamageCondition.INSTANCE;
+      }
+
+      public void serialize(FriendlyByteBuf buf, DamageCondition condition) {
+         if (condition != NoneDamageCondition.INSTANCE) {
+            throw new IllegalArgumentException();
+         }
+      }
+
+      @Override
+      public DamageCondition createDefaultInstance() {
+         return NoneDamageCondition.INSTANCE;
+      }
+   }
+}
